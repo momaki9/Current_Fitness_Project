@@ -1,0 +1,95 @@
+
+.green {
+    background-color: #00e400;
+}
+
+.yellow {
+    background-color: #ffff00;
+}
+
+.orange {
+    background-color: #ff7e00;
+}
+
+.red {
+    background-color: #ff0000;
+}
+
+.purple {
+    background-color: #8f3f97;
+}
+
+.maroon {
+    background-color: #7e0023;
+}
+
+#map {
+    display:flex;
+    flex-wrap: wrap;
+}
+
+#sunrise {
+    text-align: center;
+}
+
+#sunset {
+    text-align: center;
+}
+
+#current-aq {
+    color: black;
+    font-weight: bold;
+}
+
+#test {
+    height: fit-content;
+}
+
+.custom {
+    font-size: 28px;
+    font-style: oblique;
+}
+
+
+#weatherArt {
+    background-color: rgb(64, 163, 233);
+
+}
+
+#curWeather {
+    text-align: center;
+    height: 100px;
+}
+
+#curWeatherCol ul li {
+    height: 80px;
+    font-size: 20px;
+    padding: 2px;
+}
+
+#curWeatherCol ul li {
+    width: 170px;
+}
+
+#top-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#curWeatherCol ul:hover {
+    border: 5px solid #a5e4b0;
+    background-color: #f0ff69;
+}
+
+@media only screen and (max-width: 599px) {
+  
+    .column {
+        margin: 2px;
+        padding: 0 10px 0 10px;
+    }
+      
+    .card-content {
+        padding: 0px;
+        }
+    }

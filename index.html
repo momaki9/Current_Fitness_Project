@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!--link for jQuery autocomplete UI-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+    <!--link for external CSS styling from Bulma-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+    <!--leaflet external CSS-->
+    <link  rel="stylesheet"  href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css"  /> 
+    <!--link for local stylesheet-->
+    <link rel="stylesheet" href="./assets/style/style.css">
+    <title>Current Fitness</title>
+  </head>
+
+  <body>
+    <!--navigation section-->
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+          <!--Site logo-->
+          <img src="./assets/images/logo.png" alt="Current Fitness Logo" title="Current Fitness" width="112" height="28">
+        </a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item">Home</a>
+          <a class="navbar-item" href="#map">Map</a>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">More</a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="#about-us">About Us</a>
+              <a class="navbar-item" href="#aq-index">Air Quality Index</a>
+              <a class="navbar-item">Contact</a>
+              <hr class="navbar-divider">
+              <a class="navbar-item">Leave a Review</a>
+            </div>
+          </div>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-primary">
+                <strong>Sign up</strong>
+              </a>
+              <a class="button is-light">Log in</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <header> 
+      <!-- Search Area container -->
+      <div class="container">
+        <div class="notification is-primary">
+          <section class="hero is-primary">
+            <div class="hero-body">
+              <p class="title" id="top">Search for a city to see the most updated air quality and weather in your area!</p>
+                <div class="field has-addons">
+                  <div class="control">
+                    <input id="search-input" class="input is-rounded" type="text" placeholder="Irvine">
+                  </div>
+                  <div class="control">
+                    <button id="search-btn" class="button is-dark">Search</button>
+                  </div>
+              </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    </header>
+    <br/>
+    <br/>
+    <!--main section-->
+    <div class="tile is-ancestor">
+      <div class="tile is-vertical is-8">
+        <div class="tile">
+          <div class="tile is-parent">
+            <!--Section displaying current sunrise time -->
+            <article class="tile is-child notification is-warning">
+              <div class="content">
+                <p class="title srss">Sunrise</p>
+                  <div><img src="./assets/images/sunrise.svg" alt="Image depicting sunrise"></div>
+                  <br>
+                  <div id="sunrise" class="custom"></div>
+              </div>
+            </article>
+            <!--Section displaying sunset time-->
+            <article class="tile is-child notification is-dark">
+              <p class="title" id="pollen-data">Sunset</p>
+              <div><img src="./assets/images/sunset.svg" alt="Image depicting sunset"></div>
+                  <br>
+                  <div id="sunset" class="custom"></div>
+                  <ul id="pollen-info">
+                    <li id="tree-index"></li>
+                  </ul>
+            </article>
+          </div>
+          <!--Section displaying current air quality index value-->
+          <div class="tile is-parent">
+            <article class="tile is-child notification is-info">
+              <p class="title">Air Quality in <span id="current-city"></span></p>
+              <ul class="custom">
+                <li>Current Air Quality: <span id="current-aq"></span></li>
+                <li>Category: <span id="current-cat"></span></li>
+                <li>Category Number: <span id="current-num"></span></li>
+              </ul>
+              <br>
+            </article>
+          </div>
+        </div>
+        <!--Current Weather and 7-day forecast section-->
+        <div class="tile is-parent">
+            <article id="weatherArt" class="tile is-child notification has-text-black">
+            <p id="curWeather" class="title">Current Weather and Forecast</p>
+            <div id="curWeatherCol"class="columns">
+            <div class="column is-narrow">
+              <ul>
+                <li id="cHour1"></li>
+                <li id="hour1"></li>
+                <li id="clouds1"></li>
+                <li id="maxTemp1"></li>
+                <li id="minTemp1"></li>
+                <li id="wind1"></li>
+                <li id="hum1"></li>
+              </ul>
+            </div>
+            <!--next day forecast-->
+            <div class="column is-narrow">
+              <ul>
+                <li id="cHour2"></li>
+                <li id="hour2"></li>
+                <li id="clouds2"></li>
+                <li id="maxTemp2"></li>
+                <li id="minTemp2"></li>
+                <li id="wind2"></li>
+                <li id="hum2"></li>
+              </ul>
+            </div>
+              <!--2nd day forecast-->
+              <div class="column is-narrow">
+              <ul>
+                <li id="cHour3"></li>
+                <li id="hour3"></li>
+                <li id="clouds3"></li>
+                <li id="maxTemp3"></li>
+                <li id="minTemp3"></li>
+                <li id="wind3"></li>
+                <li id="hum3"></li>
+              </ul>
+            </div>
+            <!--3rd day forecast-->
+            <div class="column is-narrow">
+              <ul>
+                <li id="cHour4"></li>
+                <li id="hour4"></li>
+                <li id="clouds4"></li>
+                <li id="maxTemp4"></li>
+                <li id="minTemp4"></li>
+                <li id="wind4"></li>
+                <li id="hum4"></li>
+              </ul>
+            </div>
+            <!--4th day forecast-->
+            <div class="column is-narrow">
+              <ul>
+                <li id="cHour5"></li>
+                <li id="hour5"></li>
+                <li id="clouds5"></li>
+                <li id="maxTemp5"></li>
+                <li id="minTemp5"></li>
+                <li id="wind5"></li>
+                <li id="hum5"></li>
+              </ul>
+            </div>
+            <!--5th day forecast-->
+            <div class="column is-narrow">
+              <ul>
+                <li id="cHour6"></li>
+                <li id="hour6"></li>
+                <li id="clouds6"></li>
+                <li id="maxTemp6"></li>
+                <li id="minTemp6"></li>
+                <li id="wind6"></li>
+                <li id="hum6"></li>
+              </ul>
+            </div>
+            <!--6th day forecast-->
+            <div class="column is-narrow">
+              <ul>
+                <li id="cHour7"></li>
+                <li id="hour7"></li>
+                <li id="clouds7"></li>
+                <li id="maxTemp7"></li>
+                <li id="minTemp7"></li>
+                <li id="wind7"></li>
+                <li id="hum7"></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+    <!--Side panel section containing air quality index info-->
+    <div  id="test" class="tile is-parent">
+      <article class="tile is-child notification is-dark">
+        <p class="title" id="aq-index">What is Air Quality Index?</p>
+        <ul class="custom">
+          <li>Air quality index (AQI) is a measure of how clean the air is. The higher the AQI value is, the more polluted the air is. Reference below for AQI categories.</li>
+          <a href="https://www.airnow.gov/aqi/aqi-basics/"><img id="aqi-img" src="./assets/images/AQI_Colors.png" alt="The different categores of air quality index and their color coding" title="Click for more info">
+          </a>
+        </ul>
+      </article>
+    </div>
+    </div>
+    <!--Empty div container where leaflet map will be initialized-->
+    <div  id='map'  style='height:380px;'></div>
+    <!--Footer section containing About us section-->
+    <footer class="section is-medium">
+      <h2 class="title" id="about-us">About Current Fitness</h1>
+        <br>
+        <h2 class="title">Who are we?</h2>
+        <br>
+        <h3 class="subtitle"> Individuals of all ages that are conscious of the environment and their health and wish to track the weather at locations that they desire to visit.</h2>
+        <br>
+        <h2 class="title">What do we do?</h2>
+        <br> 
+        <h3 class="subtitle">Providing an easy and effortless access to weather tracking whilst coordinating personal outdoor fitness objectives. With the ever expanding and condensing world we live in, there are various aspects of the outdoors that individuals are unaware of or unable to locate consistent accurate data, as an example, pollen, or air quality meters.</h3>
+        <br>
+        <h2 class="title">Why Air Quality Matters?</h2>
+        <br>
+        <h3 class="subtitle">Air pollution poses a risk on individuals that are spending time outdoors and prolonged exposure to harmful pollutants is considered unhealthy and can cause issues for people with existing breathing issues such as asthma.</h3>
+        <br>
+        <a href="#top"><button id="top-btn" class="button is-dark">Go To Top</button></a>
+    </footer>
+    <!--leaflet map CND-->
+    <script  src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script> 
+    <!-- config script has API keys -->
+    <script src="config.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <!--jQuery CDN-->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <!--jQuery autocomplete UI CDN-->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="./assets/script/script.js"></script>
+
+  </body>
+
+</html>
